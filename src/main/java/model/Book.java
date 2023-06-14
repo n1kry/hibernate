@@ -1,20 +1,28 @@
-package entity;
+package model;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Getter
 @Setter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    @ToString.Exclude
+    private Integer id;
 
+    @ToString.Include
     private String name;
 
-    @ManyToOne(targetEntity = Author.class)
+    @ToString.Exclude
+    @ManyToMany
     @JoinColumn(name = "id_author")
-    private Author authorId;
+    private List<Author> authorId;
 }

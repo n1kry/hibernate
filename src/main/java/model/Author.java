@@ -1,21 +1,27 @@
-package entity;
+package model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
 
-import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Getter
 @Setter
-public class Author implements Serializable {
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+@Builder
+public class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    @ToString.Exclude
+    private Integer id;
 
+    @ToString.Include
     private String name;
+
+    @ToString.Exclude
+    @ManyToMany(mappedBy = "authorId", cascade = CascadeType.ALL)
+    private List<Book> books;
 }
